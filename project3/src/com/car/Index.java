@@ -31,18 +31,40 @@ public class Index {
 		int[] cars = new int[carsNumber];
 		
 		
-		for (int i=1; i<=carsNumber; i++) {
-			System.out.println("请输入第"+i+"辆车的序号:");
-			int num = input.nextInt();
-			ACar car = new Car(num);
-			
+		for (int i=0; i<carsNumber; i++) {
+			System.out.println("请输入第"+(i+1)+"辆车的序号:");
+			cars[i] = input.nextInt();
 		}
 		
-		
-		System.out.println("");
-		
+		System.out.println("请输入租车天数:");
+		int days = input.nextInt();
+		calcOrder(cars, days);
+			
 		input.close();
 
+	}
+	
+ 	protected static void calcOrder(int[] cars, int days)
+	{
+		String load = "", persons = "";
+		int  personsNum = 0;
+		float totalPrice = 0f, loadGoods = 0f;
+		for (int i=0; i < cars.length; i++) {
+			ACar car = new Car(cars[i]);
+			if (car.load != 0) {
+				load = load + car.name + "\t";
+				loadGoods += car.load;
+			}
+			if (car.persons != 0) {
+				persons = persons + car.name + "\t";
+				personsNum += car.persons;
+			}
+			totalPrice += car.unitPrice * days;
+		}
+		System.out.println("您的账单:");
+		System.out.println("***可载人的车有:"	+ "\n\t" + persons + "共载人:" + personsNum + "人" );
+		System.out.println("***载货的车有:"	+ "\n\t" + load + "共载货:" + loadGoods + "吨");
+		System.out.println("***租车总价格:"	+ "\n\t" + totalPrice + "元");
 	}
 
 }
